@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System; //allows for search such as ARRAY
+
+public class audioManager : MonoBehaviour
+{
+
+    public sound[] sounds;
+
+    void Awake()  //awake is called before start
+    {
+        foreach(sound s in sounds)
+        {
+           s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+        }
+       
+    }
+
+    public void Play (string name)
+    {
+       sound s= Array.Find(sounds, sound => sound.name == name);
+        s.source.Play();
+
+        if(pause.gameisPaused)
+        {
+            s.source.volume = 0f;
+            s.source.pitch = 0f;
+        }
+    }
+
+}
